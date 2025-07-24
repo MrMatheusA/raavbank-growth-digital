@@ -8,39 +8,39 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* RaavBank Design System - Fintech Colors */
-    --background: 0 0% 100%; /* Branco Puro */
-    --foreground: 0 0% 20%; /* Cinza Escuro */
+    /* RaavBank Design System - Cores Exatas Especificadas */
+    --background: 0 0% 100%; /* #FFFFFF - Branco Puro */
+    --foreground: 0 0% 20%; /* #333333 - Cinza Escuro (Quase Preto) */
 
-    --card: 0 0% 100%; /* Branco Puro */
-    --card-foreground: 0 0% 20%; /* Cinza Escuro */
+    --card: 0 0% 100%; /* #FFFFFF - Branco Puro */
+    --card-foreground: 0 0% 20%; /* #333333 - Cinza Escuro */
 
-    --popover: 0 0% 100%; /* Branco Puro */
-    --popover-foreground: 0 0% 20%; /* Cinza Escuro */
+    --popover: 0 0% 100%; /* #FFFFFF - Branco Puro */
+    --popover-foreground: 0 0% 20%; /* #333333 - Cinza Escuro */
 
-    --primary: 142 26% 38%; /* Verde Agronegócio */
-    --primary-foreground: 0 0% 100%; /* Branco Puro */
+    --primary: 142 29% 34%; /* #4A7C59 - Verde Agronegócio (Profundo) */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - Branco Puro */
 
-    --secondary: 0 0% 97%; /* Cinza Muito Claro */
-    --secondary-foreground: 0 0% 20%; /* Cinza Escuro */
+    --secondary: 0 0% 97%; /* #F8F8F8 - Cinza Muito Claro */
+    --secondary-foreground: 0 0% 20%; /* #333333 - Cinza Escuro */
 
-    --muted: 0 0% 97%; /* Cinza Muito Claro */
-    --muted-foreground: 0 0% 40%; /* Cinza Médio */
+    --muted: 0 0% 97%; /* #F8F8F8 - Cinza Muito Claro */
+    --muted-foreground: 0 0% 40%; /* #666666 - Cinza Médio */
 
-    --accent: 142 26% 38%; /* Verde Agronegócio */
-    --accent-foreground: 0 0% 100%; /* Branco Puro */
+    --accent: 142 29% 34%; /* #4A7C59 - Verde Agronegócio */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF - Branco Puro */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 90%; /* Cinza Claro para bordas */
-    --input: 0 0% 97%; /* Cinza Muito Claro */
-    --ring: 142 26% 38%; /* Verde Agronegócio */
+    --input: 0 0% 97%; /* #F8F8F8 - Cinza Muito Claro */
+    --ring: 142 29% 34%; /* #4A7C59 - Verde Agronegócio */
 
     --radius: 0.75rem; /* Bordas mais arredondadas para fintech moderna */
 
     /* Gradientes personalizados para fintech */
-    --gradient-primary: linear-gradient(135deg, hsl(142 26% 38%), hsl(142 30% 45%));
+    --gradient-primary: linear-gradient(135deg, hsl(142 29% 34%), hsl(142 29% 40%));
     --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 97%));
     
     /* Sombras elegantes */
@@ -52,12 +52,12 @@ All colors MUST be HSL.
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 142 26% 38%;
+    --sidebar-primary: 142 29% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 97%;
     --sidebar-accent-foreground: 0 0% 20%;
     --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 142 26% 38%;
+    --sidebar-ring: 142 29% 34%;
   }
 
   .dark {

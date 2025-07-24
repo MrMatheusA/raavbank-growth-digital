@@ -17,7 +17,7 @@ const HeroSection = () => {
               Sua confiança, nossa prioridade.
             </p>
             <p className="text-lg text-muted-foreground max-w-lg">
-              Pagamentos seguros com tecnologia de ponta para o agronegócio moderno.
+              Pagamentos seguros com RaavBank. Soluções financeiras corporativas para empresas com CNPJ.
             </p>
           </div>
 
@@ -42,16 +42,16 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Right Content - Feature Cards */}
+        {/* Right Content - Feature Cards para Empresas CNPJ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="p-6 hover:shadow-card transition-all duration-300 hover:-translate-y-1">
             <div className="space-y-4">
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-primary" />
+                <Shield className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold">Crescimento Garantido</h3>
+              <h3 className="text-lg font-semibold">Segurança Empresarial</h3>
               <p className="text-muted-foreground text-sm">
-                Soluções financeiras que crescem junto com seu agronegócio.
+                Proteção bancária avançada para empresas com CNPJ. Sua gestão financeira empresarial em mãos seguras.
               </p>
             </div>
           </Card>
@@ -59,11 +59,11 @@ const HeroSection = () => {
           <Card className="p-6 hover:shadow-card transition-all duration-300 hover:-translate-y-1">
             <div className="space-y-4">
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Shield className="h-6 w-6 text-primary" />
+                <TrendingUp className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold">Máxima Segurança</h3>
+              <h3 className="text-lg font-semibold">Gestão Financeira</h3>
               <p className="text-muted-foreground text-sm">
-                Tecnologia bancária de última geração para proteger seus recursos.
+                Controle total das finanças da sua empresa. Relatórios detalhados e análises em tempo real.
               </p>
             </div>
           </Card>
@@ -73,9 +73,9 @@ const HeroSection = () => {
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <Zap className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold">Velocidade Real</h3>
+              <h3 className="text-lg font-semibold">Pagamentos Corporativos</h3>
               <p className="text-muted-foreground text-sm">
-                Transferências e pagamentos processados em tempo real.
+                Transferências empresariais instantâneas. PIX, TED e boletos para sua operação funcionar sem parar.
               </p>
             </div>
           </Card>
@@ -85,9 +85,9 @@ const HeroSection = () => {
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <Users className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold">Suporte Especializado</h3>
+              <h3 className="text-lg font-semibold">Atendimento CNPJ</h3>
               <p className="text-muted-foreground text-sm">
-                Atendimento personalizado para o setor agropecuário.
+                Suporte especializado para empresas. Gerente dedicado para resolver suas demandas corporativas.
               </p>
             </div>
           </Card>

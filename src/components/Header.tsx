@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import raavbankLogo from "@/assets/raavbank-logo.png";
+import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 
 const Header = () => {
   return (

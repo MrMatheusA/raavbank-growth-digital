@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Shield, Eye, EyeOff, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import raavbankLogo from "@/assets/raavbank-logo-official.png";
+import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 
 const Registro = () => {
   const [formData, setFormData] = useState({

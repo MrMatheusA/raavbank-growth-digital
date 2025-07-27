@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import raavbankLogo from "@/assets/raavbank-logo-official.png";
+import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {

@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import raavbankLogo from "@/assets/raavbank-logo-official.png";
+import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 
 const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(true);

@@ -41,8 +41,10 @@ All colors MUST be HSL.
 
     /* Gradientes animados para fintech moderna */
     --gradient-primary: linear-gradient(135deg, hsl(142 29% 34%), hsl(142 35% 40%), hsl(142 29% 34%));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 97%) 50%, hsl(0 0% 100%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 97%) 30%, hsl(0 0% 100%) 100%);
     --gradient-cta: linear-gradient(45deg, hsl(142 29% 34%), hsl(142 35% 40%), hsl(142 40% 45%));
+    --gradient-animated: linear-gradient(-45deg, hsl(0 0% 98%), hsl(0 0% 100%), hsl(0 0% 97%), hsl(0 0% 99%));
+    --gradient-particles: radial-gradient(circle at 20% 50%, hsl(142 29% 34% / 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsl(142 29% 34% / 0.05) 0%, transparent 50%), radial-gradient(circle at 40% 80%, hsl(142 29% 34% / 0.08) 0%, transparent 50%);
     
     /* Sombras elegantes com glow */
     --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);

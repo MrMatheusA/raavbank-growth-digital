@@ -66,7 +66,9 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-cta': 'var(--gradient-cta)'
+				'gradient-cta': 'var(--gradient-cta)',
+				'gradient-animated': 'var(--gradient-animated)',
+				'gradient-particles': 'var(--gradient-particles)'
 			},
 			boxShadow: {
 				'card': 'var(--shadow-card)',
@@ -141,6 +143,34 @@ export default {
 					'50%': {
 						backgroundPosition: '100% 50%'
 					}
+				},
+				'particles': {
+					'0%, 100%': {
+						transform: 'translateX(0) translateY(0)',
+						opacity: '0.3'
+					},
+					'25%': {
+						transform: 'translateX(20px) translateY(-10px)',
+						opacity: '0.6'
+					},
+					'50%': {
+						transform: 'translateX(-10px) translateY(20px)',
+						opacity: '0.4'
+					},
+					'75%': {
+						transform: 'translateX(30px) translateY(10px)',
+						opacity: '0.7'
+					}
+				},
+				'floating-bg': {
+					'0%, 100%': {
+						backgroundPosition: '0% 0%',
+						backgroundSize: '100% 100%'
+					},
+					'50%': {
+						backgroundPosition: '100% 100%',
+						backgroundSize: '120% 120%'
+					}
 				}
 			},
 			animation: {
@@ -150,7 +180,9 @@ export default {
 				'slide-up': 'slide-up 0.6s ease-out',
 				'float': 'float 3s ease-in-out infinite',
 				'glow': 'glow 2s ease-in-out infinite',
-				'gradient-shift': 'gradient-shift 3s ease-in-out infinite'
+				'gradient-shift': 'gradient-shift 3s ease-in-out infinite',
+				'particles': 'particles 8s ease-in-out infinite',
+				'floating-bg': 'floating-bg 15s ease-in-out infinite'
 			}
 		}
 	},

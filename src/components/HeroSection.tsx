@@ -4,12 +4,15 @@ import { Shield, Zap, TrendingUp, Users } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 bg-gradient-hero relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/20 rounded-full blur-xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-primary/15 rounded-full blur-lg animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-primary/10 rounded-full blur-md animate-float" style={{ animationDelay: '2s' }}></div>
+    <section className="min-h-screen flex items-center justify-center px-6 bg-gradient-animated animate-floating-bg relative overflow-hidden">
+      {/* Background decorative elements com animação */}
+      <div className="absolute inset-0 opacity-40 bg-gradient-particles animate-particles"></div>
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/15 rounded-full blur-xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-primary/10 rounded-full blur-lg animate-float" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-primary/8 rounded-full blur-md animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-3/4 left-1/3 w-20 h-20 bg-primary/12 rounded-full blur-lg animate-float" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-1/6 right-1/2 w-12 h-12 bg-primary/6 rounded-full blur-sm animate-float" style={{ animationDelay: '4s' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">

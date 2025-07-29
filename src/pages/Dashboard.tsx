@@ -1,275 +1,237 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Eye, EyeOff, ArrowUpRight, ArrowDownRight, Plus, FileText, BarChart3, Users, Shield, DollarSign, TrendingUp, Activity, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  BarChart3, 
-  TrendingUp, 
-  DollarSign, 
-  Users, 
-  Shield, 
-  Settings,
-  LogOut,
-  Eye,
-  EyeOff,
-  ArrowUpRight,
-  ArrowDownLeft,
-  CreditCard,
-  Building2,
-  FileText,
-  Bell
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
-import ThemeToggle from "@/components/ThemeToggle";
+import DashboardLayout from "@/components/DashboardLayout";
+import Extratos from "./Extratos";
+import Relatorios from "./Relatorios";
 
 const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(true);
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const [currentView, setCurrentView] = useState<'dashboard' | 'extratos' | 'relatorios'>('dashboard');
 
-  const handleLogout = () => {
-    toast({
-      title: "Logout realizado",
-      description: "Você foi desconectado com segurança.",
-    });
-    navigate("/");
+  // Mock data for the main dashboard
+  const mockData = {
+    companyInfo: {
+      name: "Tech Solutions Ltda",
+      cnpj: "12.345.678/0001-90",
+    },
+    balance: 127890.50,
+    transactions: [
+      { id: 1, description: "Pagamento Cliente ABC", date: "2024-01-25", value: 15000, type: "entrada", status: "concluida" },
+      { id: 2, description: "Fornecedor XYZ", date: "2024-01-24", value: 3500, type: "saida", status: "concluida" },
+      { id: 3, description: "Vendas Online", date: "2024-01-23", value: 8900, type: "entrada", status: "pendente" },
+      { id: 4, description: "Taxa de Serviço", date: "2024-01-22", value: 1200, type: "saida", status: "concluida" },
+    ],
   };
 
-  const mockData = {
-    empresa: {
-      nome: "Tech Solutions Ltda",
-      cnpj: "12.345.678/0001-90"
-    },
-    saldo: 127890.50,
-    transacoes: [
-      { id: 1, tipo: "entrada", valor: 15000, descricao: "Pagamento Cliente ABC", data: "2024-01-25", status: "concluida" },
-      { id: 2, tipo: "saida", valor: 3500, descricao: "Fornecedor XYZ", data: "2024-01-24", status: "concluida" },
-      { id: 3, tipo: "entrada", valor: 8900, descricao: "Vendas Online", data: "2024-01-23", status: "pendente" },
-      { id: 4, tipo: "saida", valor: 1200, descricao: "Taxa de Serviço", data: "2024-01-22", status: "concluida" }
-    ]
+  const renderDashboardContent = () => (
+    <div className="space-y-6">
+      {/* Company Info */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">{mockData.companyInfo.name}</h2>
+          <p className="text-muted-foreground">CNPJ: {mockData.companyInfo.cnpj}</p>
+        </div>
+        <Badge variant="secondary" className="px-3 py-1">
+          Conta Ativa
+        </Badge>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="hover:shadow-lg transition-all duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Saldo Disponível</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center space-x-2">
+              <div className="text-2xl font-bold">
+                {showBalance 
+                  ? `R$ ${mockData.balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                  : "R$ ••••••"
+                }
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowBalance(!showBalance)}
+                className="h-8 w-8 p-0"
+              >
+                {showBalance ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-all duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Transações Hoje</CardTitle>
+            <Activity className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12</div>
+            <p className="text-xs text-muted-foreground">+2 desde ontem</p>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-all duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Status da Conta</CardTitle>
+            <CheckCircle className="h-4 w-4 text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">Ativa</div>
+            <p className="text-xs text-muted-foreground">Verificada</p>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-all duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Nível de Segurança</CardTitle>
+            <Shield className="h-4 w-4 text-blue-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-600">Alto</div>
+            <p className="text-xs text-muted-foreground">Criptografia ativa</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Recent Transactions */}
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                Transações Recentes
+                <Button variant="outline" size="sm">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Ver Todas
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {mockData.transactions.map((transaction) => (
+                <div key={transaction.id} className="flex items-center justify-between p-3 rounded-lg border">
+                  <div className="flex items-center space-x-3">
+                    <div className={`p-2 rounded-lg ${
+                      transaction.type === 'entrada' 
+                        ? 'bg-green-100 text-green-600 dark:bg-green-900/20' 
+                        : 'bg-red-100 text-red-600 dark:bg-red-900/20'
+                    }`}>
+                      {transaction.type === 'entrada' ? (
+                        <ArrowDownRight className="h-4 w-4" />
+                      ) : (
+                        <ArrowUpRight className="h-4 w-4" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium">{transaction.description}</p>
+                      <p className="text-sm text-muted-foreground">{transaction.date}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={`font-semibold ${
+                      transaction.type === 'entrada' ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {transaction.type === 'entrada' ? '+' : '-'} R$ {transaction.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                    <Badge variant={transaction.status === 'concluida' ? 'default' : 'secondary'} className="text-xs">
+                      {transaction.status === 'concluida' ? 'Concluída' : 'Pendente'}
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quick Actions and Security */}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Ações Rápidas</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button className="w-full justify-start" variant="default">
+                <Plus className="h-4 w-4 mr-2" />
+                Nova Transferência
+              </Button>
+              <Button className="w-full justify-start" variant="outline">
+                <FileText className="h-4 w-4 mr-2" />
+                Ver Extratos
+              </Button>
+              <Button className="w-full justify-start" variant="outline">
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Relatórios
+              </Button>
+              <Button className="w-full justify-start" variant="outline">
+                <Users className="h-4 w-4 mr-2" />
+                Gerenciar Usuários
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Segurança da Conta</CardTitle>
+              <CardDescription>
+                Implementações de segurança conforme roadmap:
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Criptografia 256-bit</span>
+                  <Badge variant="default" className="bg-green-100 text-green-700 dark:bg-green-900/20">Ativa</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Proteção contra Fraudes</span>
+                  <Badge variant="default" className="bg-green-100 text-green-700 dark:bg-green-900/20">Ativa</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Conformidade BC</span>
+                  <Badge variant="default" className="bg-green-100 text-green-700 dark:bg-green-900/20">Conforme</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Controle MAC Address</span>
+                  <Badge variant="default" className="bg-blue-100 text-blue-700 dark:bg-blue-900/20">Autorizado</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">API BaaS</span>
+                  <Badge variant="default" className="bg-green-100 text-green-700 dark:bg-green-900/20">Conectada</Badge>
+                </div>
+              </div>
+              <div className="pt-3 border-t">
+                <p className="text-xs text-muted-foreground">
+                  Taxas variáveis e de serviço aplicadas conforme regulamentação do Banco Central
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderContent = () => {
+    switch (currentView) {
+      case 'extratos':
+        return <Extratos />;
+      case 'relatorios':
+        return <Relatorios />;
+      default:
+        return renderDashboardContent();
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-animated animate-floating-bg relative overflow-hidden">
-      {/* Background decorativo */}
-      <div className="absolute inset-0 opacity-10 bg-gradient-particles animate-particles"></div>
-
-      {/* Header do Dashboard */}
-      <header className="bg-background/95 backdrop-blur border-b border-border/30 sticky top-0 z-50 shadow-card">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <img src={raavbankLogo} alt="RaavBank" className="h-8 w-auto" />
-              <div>
-                <h1 className="text-lg font-semibold">{mockData.empresa.nome}</h1>
-                <p className="text-sm text-muted-foreground">CNPJ: {mockData.empresa.cnpj}</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <ThemeToggle />
-              <Button variant="ghost" size="sm" className="relative">
-                <Bell className="h-4 w-4" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></span>
-              </Button>
-              <Button variant="ghost" size="sm">
-                <Settings className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" onClick={handleLogout}>
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="p-6 relative z-10">
-        {/* Cards de resumo */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="p-6 hover:shadow-hero transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-muted-foreground text-sm font-medium">Saldo Disponível</p>
-                <div className="flex items-center space-x-2 mt-1">
-                  <p className="text-2xl font-bold">
-                    {showBalance ? `R$ ${mockData.saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : "R$ ••••••"}
-                  </p>
-                  <button 
-                    onClick={() => setShowBalance(!showBalance)}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {showBalance ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                  </button>
-                </div>
-              </div>
-              <div className="h-12 w-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center">
-                <DollarSign className="h-6 w-6 text-primary" />
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-6 hover:shadow-hero transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-muted-foreground text-sm font-medium">Transações Hoje</p>
-                <p className="text-2xl font-bold mt-1">12</p>
-                <div className="flex items-center space-x-1 mt-1">
-                  <TrendingUp className="h-3 w-3 text-green-500" />
-                  <span className="text-xs text-green-500">+15% vs ontem</span>
-                </div>
-              </div>
-              <div className="h-12 w-12 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-lg flex items-center justify-center">
-                <BarChart3 className="h-6 w-6 text-green-500" />
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-6 hover:shadow-hero transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-muted-foreground text-sm font-medium">Conta Empresarial</p>
-                <p className="text-2xl font-bold mt-1">Ativa</p>
-                <Badge variant="default" className="mt-1 bg-primary/10 text-primary border-primary/20">
-                  Verificada
-                </Badge>
-              </div>
-              <div className="h-12 w-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center">
-                <Building2 className="h-6 w-6 text-primary" />
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-6 hover:shadow-hero transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-muted-foreground text-sm font-medium">Segurança</p>
-                <p className="text-2xl font-bold mt-1">100%</p>
-                <Badge variant="default" className="mt-1 bg-green-500/10 text-green-500 border-green-500/20">
-                  Protegida
-                </Badge>
-              </div>
-              <div className="h-12 w-12 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-lg flex items-center justify-center">
-                <Shield className="h-6 w-6 text-green-500" />
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Transações Recentes */}
-          <div className="lg:col-span-2">
-            <Card className="p-6 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold">Transações Recentes</h2>
-                <Button variant="outline" size="sm">
-                  <FileText className="h-4 w-4 mr-2" />
-                  Ver Extrato
-                </Button>
-              </div>
-              
-              <div className="space-y-4">
-                {mockData.transacoes.map((transacao) => (
-                  <div key={transacao.id} className="flex items-center justify-between p-4 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors">
-                    <div className="flex items-center space-x-4">
-                      <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
-                        transacao.tipo === 'entrada' 
-                          ? 'bg-green-500/20 text-green-600' 
-                          : 'bg-red-500/20 text-red-600'
-                      }`}>
-                        {transacao.tipo === 'entrada' ? (
-                          <ArrowDownLeft className="h-5 w-5" />
-                        ) : (
-                          <ArrowUpRight className="h-5 w-5" />
-                        )}
-                      </div>
-                      <div>
-                        <p className="font-medium">{transacao.descricao}</p>
-                        <p className="text-sm text-muted-foreground">{transacao.data}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className={`font-semibold ${
-                        transacao.tipo === 'entrada' ? 'text-green-600' : 'text-red-600'
-                      }`}>
-                        {transacao.tipo === 'entrada' ? '+' : '-'} R$ {transacao.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </p>
-                      <Badge variant={transacao.status === 'concluida' ? 'default' : 'secondary'} className="text-xs">
-                        {transacao.status === 'concluida' ? 'Concluída' : 'Pendente'}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
-
-          {/* Ações Rápidas */}
-          <div className="space-y-6">
-            <Card className="p-6 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-              <h3 className="text-lg font-semibold mb-4">Ações Rápidas</h3>
-              <div className="space-y-3">
-                <Button className="w-full justify-start bg-gradient-cta hover:shadow-glow hover:scale-105 transition-all duration-300">
-                  <CreditCard className="h-4 w-4 mr-2" />
-                  Nova Transferência
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start hover:bg-primary/10 hover:border-primary/30"
-                  onClick={() => navigate('/extratos')}
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Ver Extratos
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start hover:bg-primary/10 hover:border-primary/30"
-                  onClick={() => navigate('/relatorios')}
-                >
-                  <BarChart3 className="h-4 w-4 mr-2" />
-                  Relatórios
-                </Button>
-                <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary/30">
-                  <Users className="h-4 w-4 mr-2" />
-                  Gerenciar Usuários
-                </Button>
-              </div>
-            </Card>
-
-            <Card className="p-6 bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
-              <h3 className="text-lg font-semibold mb-4">Segurança da Conta</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Autenticação 2FA</span>
-                  <Badge variant="default" className="bg-green-500/10 text-green-500 border-green-500/20">
-                    Ativa
-                  </Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Criptografia</span>
-                  <Badge variant="default" className="bg-green-500/10 text-green-500 border-green-500/20">
-                    256-bit
-                  </Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Compliance BC</span>
-                  <Badge variant="default" className="bg-green-500/10 text-green-500 border-green-500/20">
-                    Conforme
-                  </Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">MAC Address</span>
-                  <Badge variant="default" className="bg-primary/10 text-primary border-primary/20">
-                    Autorizado
-                  </Badge>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </main>
-    </div>
+    <DashboardLayout currentView={currentView} onViewChange={setCurrentView}>
+      {renderContent()}
+    </DashboardLayout>
   );
 };
 

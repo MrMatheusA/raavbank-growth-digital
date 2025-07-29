@@ -22,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(true);
@@ -68,6 +69,7 @@ const Dashboard = () => {
             </div>
             
             <div className="flex items-center space-x-3">
+              <ThemeToggle />
               <Button variant="ghost" size="sm" className="relative">
                 <Bell className="h-4 w-4" />
                 <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></span>
@@ -212,11 +214,19 @@ const Dashboard = () => {
                   <CreditCard className="h-4 w-4 mr-2" />
                   Nova Transferência
                 </Button>
-                <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary/30">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start hover:bg-primary/10 hover:border-primary/30"
+                  onClick={() => navigate('/extratos')}
+                >
                   <FileText className="h-4 w-4 mr-2" />
-                  Gerar Boleto
+                  Ver Extratos
                 </Button>
-                <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary/30">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start hover:bg-primary/10 hover:border-primary/30"
+                  onClick={() => navigate('/relatorios')}
+                >
                   <BarChart3 className="h-4 w-4 mr-2" />
                   Relatórios
                 </Button>

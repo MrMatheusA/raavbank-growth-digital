@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,22 +18,30 @@ const Header = () => {
       
       <nav className="hidden md:flex items-center space-x-10">
         <button 
+          onClick={() => navigate('/')}
+          className="text-foreground/70 hover:text-primary transition-all duration-300 relative group font-medium"
+        >
+          Home
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </button>
+        <button 
           onClick={() => navigate('/sobre')}
           className="text-foreground/70 hover:text-primary transition-all duration-300 relative group font-medium"
         >
           Sobre
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
         </button>
-        <a 
-          href="#contato" 
+        <button 
+          onClick={() => navigate('/contato')}
           className="text-foreground/70 hover:text-primary transition-all duration-300 relative group font-medium"
         >
           Contato
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-        </a>
+        </button>
       </nav>
 
       <div className="flex items-center space-x-4">
+        <ThemeToggle />
         <Button 
           variant="ghost" 
           size="sm"

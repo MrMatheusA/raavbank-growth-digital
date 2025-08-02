@@ -113,25 +113,25 @@ const Contato = () => {
                 
                 <div className="space-y-4">
                   <div className="border-l-4 border-primary pl-4">
-                    <h3 className="font-semibold text-primary">Criptografia Avançada</h3>
+                    <h3 className="font-semibold">Criptografia Avançada</h3>
                     <p className="text-sm text-muted-foreground">
                       Proteção com criptografia de ponta e conformidade com regulamentações do Banco Central
                     </p>
                   </div>
-                  <div className="border-l-4 border-green-500 pl-4">
-                    <h3 className="font-semibold text-green-500">Controle de Acesso</h3>
+                  <div className="border-l-4 border-primary pl-4">
+                    <h3 className="font-semibold">Controle de Acesso</h3>
                     <p className="text-sm text-muted-foreground">
                       Controle rigoroso por MAC Address e autorização de dispositivos
                     </p>
                   </div>
-                  <div className="border-l-4 border-blue-500 pl-4">
-                    <h3 className="font-semibold text-blue-500">Performance Garantida</h3>
+                  <div className="border-l-4 border-primary pl-4">
+                    <h3 className="font-semibold">Performance Garantida</h3>
                     <p className="text-sm text-muted-foreground">
                       Tempos de resposta otimizados e alta disponibilidade 24/7
                     </p>
                   </div>
-                  <div className="border-l-4 border-purple-500 pl-4">
-                    <h3 className="font-semibold text-purple-500">Escalabilidade</h3>
+                  <div className="border-l-4 border-primary pl-4">
+                    <h3 className="font-semibold">Escalabilidade</h3>
                     <p className="text-sm text-muted-foreground">
                       Infraestrutura preparada para o crescimento do seu negócio
                     </p>

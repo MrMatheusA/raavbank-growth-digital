@@ -18,7 +18,7 @@ const Sobre = () => {
               Sobre a <span className="text-primary">RaavBank</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
-              Sua confiança, nossa prioridade. Somos uma fintech especializada em soluções financeiras corporativas para empresas com CNPJ, oferecendo segurança, inovação e atendimento personalizado.
+              Sua confiança, nossa prioridade. Somos uma fintech especializada em soluções financeiras corporativas para empresas e produtores, oferecendo segurança, inovação e atendimento personalizado.
             </p>
           </div>
         </section>
@@ -33,7 +33,7 @@ const Sobre = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Missão</h3>
                 <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors">
-                  Simplificar a gestão financeira empresarial através de tecnologia segura e soluções inovadoras para empresas com CNPJ.
+                  Simplificar a gestão financeira empresarial através de tecnologia segura e soluções inovadoras para empresas e produtores.
                 </p>
               </Card>
 
@@ -84,8 +84,8 @@ const Sobre = () => {
                 },
                 {
                   icon: Users,
-                  title: "Atendimento CNPJ",
-                  description: "Gerente dedicado especializado em soluções corporativas"
+                  title: "Atendimento Empresarial",
+                  description: "Gerente dedicado especializado em soluções para empresas e produtores"
                 },
                 {
                   icon: CheckCircle,

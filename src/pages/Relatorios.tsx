@@ -56,10 +56,20 @@ const Relatorios = () => {
               <SelectItem value="last-year">Último Ano</SelectItem>
             </SelectContent>
           </Select>
-          <Button>
-            <Download className="h-4 w-4 mr-2" />
-            Exportar Relatório
-          </Button>
+          <div className="flex items-center space-x-2">
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              PDF
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Excel
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              OFX
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -124,56 +134,41 @@ const Relatorios = () => {
         </Card>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Income by Category */}
+      {/* Resumo do Período */}
+      <div className="grid lg:grid-cols-3 gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-green-500" />
-              Receitas por Categoria
-            </CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Entradas do Período</CardTitle>
+            <TrendingUp className="h-4 w-4 text-green-500" />
           </CardHeader>
-          <CardContent className="space-y-4">
-            {reportData.incomeCategories.map((category, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">{category.name}</span>
-                  <span className="text-sm text-muted-foreground">{category.percentage}%</span>
-                </div>
-                <Progress value={category.percentage} className="h-2" />
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-muted-foreground">
-                    R$ {category.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                  </span>
-                </div>
-              </div>
-            ))}
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">
+              R$ {reportData.summary.totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </div>
           </CardContent>
         </Card>
 
-        {/* Expenses by Category */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingDown className="h-5 w-5 text-red-500" />
-              Gastos por Categoria
-            </CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Saídas do Período</CardTitle>
+            <TrendingDown className="h-4 w-4 text-red-500" />
           </CardHeader>
-          <CardContent className="space-y-4">
-            {reportData.expenseCategories.map((category, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">{category.name}</span>
-                  <span className="text-sm text-muted-foreground">{category.percentage}%</span>
-                </div>
-                <Progress value={category.percentage} className="h-2" />
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-muted-foreground">
-                    R$ {category.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                  </span>
-                </div>
-              </div>
-            ))}
+          <CardContent>
+            <div className="text-2xl font-bold text-red-600">
+              R$ {reportData.summary.totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Saldo do Período</CardTitle>
+            <BarChart3 className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">
+              R$ {(reportData.summary.totalIncome - reportData.summary.totalExpenses).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -41,8 +41,7 @@ const Header = () => {
       </nav>
 
       <div className="flex items-center space-x-4">
-        <ThemeToggle />
-        <Button 
+        <Button
           variant="ghost" 
           size="sm"
           onClick={() => navigate('/login')}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, Settings, LogOut, Home, FileText, BarChart3, Menu } from "lucide-react";
+import { Bell, Settings, LogOut, Home, FileText, BarChart3, Menu, ArrowRightLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,8 @@ import logo from "@/assets/raavbank-logo-transparent.png";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  currentView: 'dashboard' | 'extratos' | 'relatorios';
-  onViewChange: (view: 'dashboard' | 'extratos' | 'relatorios') => void;
+  currentView: 'dashboard' | 'extratos' | 'relatorios' | 'transferencias';
+  onViewChange: (view: 'dashboard' | 'extratos' | 'relatorios' | 'transferencias') => void;
 }
 
 const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayoutProps) => {
@@ -30,6 +30,7 @@ const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayou
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'extratos', label: 'Extratos', icon: FileText },
     { id: 'relatorios', label: 'Relatórios', icon: BarChart3 },
+    { id: 'transferencias', label: 'Transferências', icon: ArrowRightLeft },
   ];
 
   return (
@@ -99,7 +100,7 @@ const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayou
                     variant={currentView === item.id ? "secondary" : "ghost"}
                     className="w-full justify-start gap-3"
                     onClick={() => {
-                      onViewChange(item.id as 'dashboard' | 'extratos' | 'relatorios');
+                      onViewChange(item.id as 'dashboard' | 'extratos' | 'relatorios' | 'transferencias');
                       setSidebarOpen(false);
                     }}
                   >

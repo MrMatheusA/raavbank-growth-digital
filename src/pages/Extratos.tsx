@@ -14,14 +14,14 @@ const Extratos = () => {
   });
 
   const mockTransactions = [
-    { id: 1, type: "entrada", value: 25000, description: "Pagamento Cliente Tech Corp", date: "2024-01-28", status: "concluida", category: "Recebimento" },
-    { id: 2, type: "saida", value: 5500, description: "Fornecedor Software Ltda", date: "2024-01-27", status: "concluida", category: "Pagamento" },
-    { id: 3, type: "entrada", value: 18900, description: "Vendas E-commerce", date: "2024-01-26", status: "concluida", category: "Recebimento" },
-    { id: 4, type: "saida", value: 2200, description: "Taxa de Serviço Bancário", date: "2024-01-25", status: "concluida", category: "Taxa" },
-    { id: 5, type: "entrada", value: 12000, description: "Consultoria Prestada", date: "2024-01-24", status: "pendente", category: "Recebimento" },
-    { id: 6, type: "saida", value: 8500, description: "Pagamento Salários", date: "2024-01-23", status: "concluida", category: "Folha" },
-    { id: 7, type: "entrada", value: 35000, description: "Contrato Anual Cliente ABC", date: "2024-01-22", status: "concluida", category: "Recebimento" },
-    { id: 8, type: "saida", value: 1500, description: "Manutenção Equipamentos", date: "2024-01-21", status: "concluida", category: "Operacional" }
+    { id: 1, type: "entrada", value: 25000, description: "Pagamento Cliente Tech Corp", date: "2024-01-28", status: "concluida", category: "Recebimento", machine: null },
+    { id: 2, type: "saida", value: 5500, description: "Fornecedor Software Ltda", date: "2024-01-27", status: "concluida", category: "Pagamento", machine: "Workstation-001" },
+    { id: 3, type: "entrada", value: 18900, description: "Vendas E-commerce", date: "2024-01-26", status: "concluida", category: "Recebimento", machine: null },
+    { id: 4, type: "saida", value: 2200, description: "Taxa de Serviço Bancário", date: "2024-01-25", status: "concluida", category: "Taxa", machine: "Admin-Desktop" },
+    { id: 5, type: "entrada", value: 12000, description: "Consultoria Prestada", date: "2024-01-24", status: "pendente", category: "Recebimento", machine: null },
+    { id: 6, type: "saida", value: 8500, description: "Pagamento Salários", date: "2024-01-23", status: "concluida", category: "Folha", machine: "HR-Laptop-03" },
+    { id: 7, type: "entrada", value: 35000, description: "Contrato Anual Cliente ABC", date: "2024-01-22", status: "concluida", category: "Recebimento", machine: null },
+    { id: 8, type: "saida", value: 1500, description: "Manutenção Equipamentos", date: "2024-01-21", status: "concluida", category: "Operacional", machine: "Finance-PC-02" }
   ];
 
   const filteredTransactions = mockTransactions.filter(transaction => {
@@ -58,7 +58,19 @@ const Extratos = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Entradas</CardTitle>
+            <CardTitle className="text-sm font-medium">Saldo Atual</CardTitle>
+            <Equal className={`h-4 w-4 ${periodBalance >= 0 ? 'text-green-500' : 'text-red-500'}`} />
+          </CardHeader>
+          <CardContent>
+            <div className={`text-2xl font-bold ${periodBalance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              R$ {periodBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Entradas do Mês</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
@@ -70,24 +82,12 @@ const Extratos = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Saídas</CardTitle>
+            <CardTitle className="text-sm font-medium">Saídas do Mês</CardTitle>
             <TrendingDown className="h-4 w-4 text-red-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">
               R$ {totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Saldo do Período</CardTitle>
-            <Equal className={`h-4 w-4 ${periodBalance >= 0 ? 'text-green-500' : 'text-red-500'}`} />
-          </CardHeader>
-          <CardContent>
-            <div className={`text-2xl font-bold ${periodBalance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              R$ {periodBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
             </div>
           </CardContent>
         </Card>
@@ -176,6 +176,11 @@ const Extratos = () => {
                       <Badge variant="outline" className="text-xs">
                         {transaction.category}
                       </Badge>
+                      {transaction.machine && (
+                        <Badge variant="secondary" className="text-xs">
+                          {transaction.machine}
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </div>

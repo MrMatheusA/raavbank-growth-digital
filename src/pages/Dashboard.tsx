@@ -6,10 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import DashboardLayout from "@/components/DashboardLayout";
 import Extratos from "./Extratos";
 import Relatorios from "./Relatorios";
+import Transferencias from "./Transferencias";
 
 const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(true);
-  const [currentView, setCurrentView] = useState<'dashboard' | 'extratos' | 'relatorios'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'extratos' | 'relatorios' | 'transferencias'>('dashboard');
 
   // Mock data for the main dashboard
   const mockData = {
@@ -223,6 +224,8 @@ const Dashboard = () => {
         return <Extratos />;
       case 'relatorios':
         return <Relatorios />;
+      case 'transferencias':
+        return <Transferencias />;
       default:
         return renderDashboardContent();
     }

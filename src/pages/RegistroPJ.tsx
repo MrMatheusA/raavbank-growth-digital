@@ -3,16 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, Eye, EyeOff, CheckCircle } from "lucide-react";
+import { Shield, Eye, EyeOff, CheckCircle, Building } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 
-const Registro = () => {
+const RegistroPJ = () => {
   const [formData, setFormData] = useState({
+    nomeEmpresa: "",
     nomeResponsavel: "",
     cnpj: "",
-    dataNascimento: "",
     telefone: "",
     email: "",
     cpfResponsavel: "",
@@ -67,8 +67,8 @@ const Registro = () => {
     // Simulação de cadastro
     setTimeout(() => {
       toast({
-        title: "Cadastro realizado com sucesso!",
-        description: "Sua conta foi criada. Redirecionando para o login...",
+        title: "Cadastro PJ realizado com sucesso!",
+        description: "Sua conta empresarial foi criada. Redirecionando para o login...",
       });
       navigate("/login");
       setIsLoading(false);
@@ -76,46 +76,41 @@ const Registro = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-animated animate-floating-bg py-12 px-6 relative overflow-hidden">
-      {/* Background decorativo */}
-      <div className="absolute inset-0 opacity-20 bg-gradient-particles animate-particles"></div>
-      <div className="absolute inset-0 opacity-15">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-primary/8 rounded-full blur-lg animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-primary/6 rounded-full blur-md animate-float" style={{ animationDelay: '2s' }}></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12 px-6 relative overflow-hidden">
       <div className="max-w-2xl mx-auto relative z-10">
-        <Card className="p-8 shadow-hero bg-gradient-to-br from-card to-secondary/30 border-0 animate-fade-in">
+        <Card className="p-8 shadow-lg bg-white">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6">
               <img 
                 src={raavbankLogo} 
                 alt="RaavBank" 
-                className="h-12 w-auto animate-float" 
+                className="h-12 w-auto" 
               />
             </div>
-            <h1 className="text-2xl font-bold mb-2">Cadastro Empresarial</h1>
-            <p className="text-muted-foreground">Registre sua empresa no RaavBank</p>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Building className="h-6 w-6 text-blue-600" />
+              <h1 className="text-2xl font-bold text-gray-900">Cadastro Pessoa Jurídica</h1>
+            </div>
+            <p className="text-gray-600">Registre sua empresa no RaavBank</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="nomeResponsavel" className="font-medium">Nome do Responsável</Label>
+                <Label htmlFor="nomeEmpresa" className="font-medium text-gray-700">Nome da Empresa</Label>
                 <Input
-                  id="nomeResponsavel"
+                  id="nomeEmpresa"
                   type="text"
-                  placeholder="Nome completo"
-                  value={formData.nomeResponsavel}
-                  onChange={(e) => handleInputChange('nomeResponsavel', e.target.value)}
-                  className="h-12 border-border/50 focus:border-primary transition-all duration-300"
+                  placeholder="Razão social"
+                  value={formData.nomeEmpresa}
+                  onChange={(e) => handleInputChange('nomeEmpresa', e.target.value)}
+                  className="h-12"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cnpj" className="font-medium">CNPJ da Empresa</Label>
+                <Label htmlFor="cnpj" className="font-medium text-gray-700">CNPJ</Label>
                 <Input
                   id="cnpj"
                   type="text"
@@ -123,52 +118,26 @@ const Registro = () => {
                   value={formData.cnpj}
                   onChange={(e) => handleInputChange('cnpj', e.target.value)}
                   maxLength={18}
-                  className="h-12 border-border/50 focus:border-primary transition-all duration-300"
+                  className="h-12"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="dataNascimento" className="font-medium">Data de Nascimento</Label>
+                <Label htmlFor="nomeResponsavel" className="font-medium text-gray-700">Nome do Responsável</Label>
                 <Input
-                  id="dataNascimento"
-                  type="date"
-                  value={formData.dataNascimento}
-                  onChange={(e) => handleInputChange('dataNascimento', e.target.value)}
-                  className="h-12 border-border/50 focus:border-primary transition-all duration-300"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="telefone" className="font-medium">Telefone</Label>
-                <Input
-                  id="telefone"
+                  id="nomeResponsavel"
                   type="text"
-                  placeholder="(00) 00000-0000"
-                  value={formData.telefone}
-                  onChange={(e) => handleInputChange('telefone', e.target.value)}
-                  maxLength={15}
-                  className="h-12 border-border/50 focus:border-primary transition-all duration-300"
+                  placeholder="Nome completo"
+                  value={formData.nomeResponsavel}
+                  onChange={(e) => handleInputChange('nomeResponsavel', e.target.value)}
+                  className="h-12"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="font-medium">Email Corporativo</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="contato@empresa.com"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="h-12 border-border/50 focus:border-primary transition-all duration-300"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="cpfResponsavel" className="font-medium">CPF do Responsável</Label>
+                <Label htmlFor="cpfResponsavel" className="font-medium text-gray-700">CPF do Responsável</Label>
                 <Input
                   id="cpfResponsavel"
                   type="text"
@@ -176,13 +145,40 @@ const Registro = () => {
                   value={formData.cpfResponsavel}
                   onChange={(e) => handleInputChange('cpfResponsavel', e.target.value)}
                   maxLength={14}
-                  className="h-12 border-border/50 focus:border-primary transition-all duration-300"
+                  className="h-12"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="senha" className="font-medium">Senha</Label>
+                <Label htmlFor="telefone" className="font-medium text-gray-700">Telefone</Label>
+                <Input
+                  id="telefone"
+                  type="text"
+                  placeholder="(00) 00000-0000"
+                  value={formData.telefone}
+                  onChange={(e) => handleInputChange('telefone', e.target.value)}
+                  maxLength={15}
+                  className="h-12"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="font-medium text-gray-700">Email Corporativo</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="contato@empresa.com"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className="h-12"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="senha" className="font-medium text-gray-700">Senha</Label>
                 <div className="relative">
                   <Input
                     id="senha"
@@ -190,14 +186,14 @@ const Registro = () => {
                     placeholder="Mínimo 8 caracteres"
                     value={formData.senha}
                     onChange={(e) => handleInputChange('senha', e.target.value)}
-                    className="h-12 pr-12 border-border/50 focus:border-primary transition-all duration-300"
+                    className="h-12 pr-12"
                     minLength={8}
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -205,7 +201,7 @@ const Registro = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmarSenha" className="font-medium">Confirmar Senha</Label>
+                <Label htmlFor="confirmarSenha" className="font-medium text-gray-700">Confirmar Senha</Label>
                 <div className="relative">
                   <Input
                     id="confirmarSenha"
@@ -213,13 +209,13 @@ const Registro = () => {
                     placeholder="Confirme sua senha"
                     value={formData.confirmarSenha}
                     onChange={(e) => handleInputChange('confirmarSenha', e.target.value)}
-                    className="h-12 pr-12 border-border/50 focus:border-primary transition-all duration-300"
+                    className="h-12 pr-12"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
                   >
                     {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -229,7 +225,7 @@ const Registro = () => {
 
             <Button
               type="submit"
-              className="w-full h-12 bg-gradient-cta hover:shadow-glow hover:scale-105 transition-all duration-300 font-medium"
+              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -246,14 +242,23 @@ const Registro = () => {
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-muted-foreground">
+          <div className="mt-6 text-center space-y-3">
+            <p className="text-gray-600">
               Já possui conta?{" "}
               <button
                 onClick={() => navigate("/login")}
-                className="text-primary hover:underline font-medium transition-colors"
+                className="text-blue-600 hover:underline font-medium"
               >
                 Faça login
+              </button>
+            </p>
+            <p className="text-gray-600">
+              É pessoa física?{" "}
+              <button
+                onClick={() => navigate("/registro-pf")}
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Cadastre-se como PF
               </button>
             </p>
           </div>
@@ -261,17 +266,16 @@ const Registro = () => {
           <div className="mt-6 text-center">
             <button
               onClick={() => navigate("/")}
-              className="text-muted-foreground hover:text-primary transition-colors text-sm"
+              className="text-gray-500 hover:text-blue-600 text-sm"
             >
               ← Voltar ao início
             </button>
           </div>
         </Card>
 
-        {/* Informações de segurança */}
         <div className="mt-6 text-center">
-          <div className="flex items-center justify-center space-x-2 text-muted-foreground text-sm">
-            <Shield className="h-4 w-4 text-primary" />
+          <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+            <Shield className="h-4 w-4 text-blue-600" />
             <span>Todos os dados são criptografados e protegidos</span>
           </div>
         </div>
@@ -280,4 +284,4 @@ const Registro = () => {
   );
 };
 
-export default Registro;
+export default RegistroPJ;

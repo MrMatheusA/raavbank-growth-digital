@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import raavbankLogo from "@/assets/raavbank-logo-transparent.png";
 
 const Login = () => {
-  const [cnpj, setCnpj] = useState("");
+  const [documento, setDocumento] = useState("");
   const [senha, setSenha] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,9 +21,24 @@ const Login = () => {
     return numbers.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
   };
 
-  const handleCNPJChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatCNPJ(e.target.value);
-    setCnpj(formatted);
+  const formatCPF = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    return numbers.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  };
+
+  const handleDocumentoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    let formatted = value;
+    
+    if (value.length <= 11) {
+      // CPF
+      formatted = formatCPF(e.target.value);
+    } else {
+      // CNPJ
+      formatted = formatCNPJ(e.target.value);
+    }
+    
+    setDocumento(formatted);
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -32,7 +47,7 @@ const Login = () => {
 
     // Simulação de autenticação
     setTimeout(() => {
-      if (cnpj && senha) {
+      if (documento && senha) {
         toast({
           title: "Login realizado com sucesso!",
           description: "Redirecionando para o dashboard...",
@@ -50,17 +65,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-animated animate-floating-bg flex items-center justify-center px-6 relative overflow-hidden">
-      {/* Background decorativo */}
-      <div className="absolute inset-0 opacity-20 bg-gradient-particles animate-particles"></div>
-      <div className="absolute inset-0 opacity-15">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-primary/8 rounded-full blur-lg animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-primary/6 rounded-full blur-md animate-float" style={{ animationDelay: '2s' }}></div>
-      </div>
-
-      <div className="w-full max-w-md relative z-10">
-        <Card className="p-8 shadow-hero bg-gradient-to-br from-card to-secondary/30 border-0 animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center px-6">
+      <div className="w-full max-w-md">
+        <Card className="p-8 shadow-lg bg-white">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6">
               <img 
@@ -69,27 +76,27 @@ const Login = () => {
                 className="h-12 w-auto animate-float" 
               />
             </div>
-            <h1 className="text-2xl font-bold mb-2">Acesso Empresarial</h1>
-            <p className="text-muted-foreground">Entre com seus dados corporativos</p>
+            <h1 className="text-2xl font-bold mb-2 text-gray-900">Acesso RaavBank</h1>
+            <p className="text-gray-600">Entre com seu CPF ou CNPJ</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="cnpj" className="font-medium">CNPJ</Label>
+              <Label htmlFor="documento" className="font-medium text-gray-700">CPF ou CNPJ</Label>
               <Input
-                id="cnpj"
+                id="documento"
                 type="text"
-                placeholder="00.000.000/0000-00"
-                value={cnpj}
-                onChange={handleCNPJChange}
+                placeholder="000.000.000-00 ou 00.000.000/0000-00"
+                value={documento}
+                onChange={handleDocumentoChange}
                 maxLength={18}
-                className="h-12 border-border/50 focus:border-primary transition-all duration-300"
+                className="h-12"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="senha" className="font-medium">Senha</Label>
+              <Label htmlFor="senha" className="font-medium text-gray-700">Senha</Label>
               <div className="relative">
                 <Input
                   id="senha"
@@ -97,13 +104,13 @@ const Login = () => {
                   placeholder="Digite sua senha"
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
-                  className="h-12 pr-12 border-border/50 focus:border-primary transition-all duration-300"
+                  className="h-12 pr-12"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -112,7 +119,7 @@ const Login = () => {
 
             <Button
               type="submit"
-              className="w-full h-12 bg-gradient-cta hover:shadow-glow hover:scale-105 transition-all duration-300 font-medium"
+              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -130,13 +137,13 @@ const Login = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Não possui conta?{" "}
               <button
                 onClick={() => navigate("/registro")}
-                className="text-primary hover:underline font-medium transition-colors"
+                className="text-blue-600 hover:underline font-medium"
               >
-                Cadastre sua empresa
+                Cadastre-se aqui
               </button>
             </p>
           </div>
@@ -144,17 +151,16 @@ const Login = () => {
           <div className="mt-6 text-center">
             <button
               onClick={() => navigate("/")}
-              className="text-muted-foreground hover:text-primary transition-colors text-sm"
+              className="text-gray-500 hover:text-blue-600 text-sm"
             >
               ← Voltar ao início
             </button>
           </div>
         </Card>
 
-        {/* Informações de segurança */}
         <div className="mt-6 text-center">
-          <div className="flex items-center justify-center space-x-2 text-muted-foreground text-sm">
-            <Shield className="h-4 w-4 text-primary" />
+          <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+            <Shield className="h-4 w-4 text-blue-600" />
             <span>Seus dados estão protegidos por criptografia avançada</span>
           </div>
         </div>

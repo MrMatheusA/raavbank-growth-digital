@@ -7,9 +7,7 @@ import Index from "./pages/Index";
 import Sobre from "./pages/Sobre";
 import Contato from "./pages/Contato";
 import Login from "./pages/Login";
-import EscolhaRegistro from "./pages/EscolhaRegistro";
-import RegistroPJ from "./pages/RegistroPJ";
-import RegistroPF from "./pages/RegistroPF";
+import Registro from "./pages/Registro";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
@@ -26,9 +24,7 @@ const App = () => (
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/contato" element={<Contato />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/registro" element={<EscolhaRegistro />} />
-          <Route path="/registro-pj" element={<RegistroPJ />} />
-          <Route path="/registro-pf" element={<RegistroPF />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

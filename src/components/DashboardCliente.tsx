@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Eye, EyeOff, ArrowUpRight, ArrowDownRight, Plus, FileText, BarChart3, Users, Shield, DollarSign, TrendingUp, Activity, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, ArrowUpRight, ArrowDownRight, Plus, FileText, BarChart3, Users, Shield, DollarSign, TrendingUp, Activity, CheckCircle, AlertTriangle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface DashboardClienteProps {
   userType: 'PF' | 'PJ';
@@ -10,6 +11,14 @@ interface DashboardClienteProps {
 
 const DashboardCliente = ({ userType }: DashboardClienteProps) => {
   const [showBalance, setShowBalance] = useState(true);
+  const [showAlert, setShowAlert] = useState(true);
+  
+  // Simulação de status da conta - em produção viria do backend
+  const accountStatus = {
+    status: 'suspended', // 'active' | 'suspended' | 'pending' | 'warning'
+    message: 'Sua conta foi temporariamente suspensa por motivos de segurança.',
+    action: 'Entre em contato com seu gerente de conta para reativação.'
+  };
 
   // Mock data baseado no tipo de usuário
   const mockData = userType === 'PJ' ? {
@@ -42,6 +51,41 @@ const DashboardCliente = ({ userType }: DashboardClienteProps) => {
 
   return (
     <div className="space-y-6">
+      {/* Alert de Status da Conta */}
+      {showAlert && accountStatus.status !== 'active' && (
+        <Alert 
+          variant={
+            accountStatus.status === 'suspended' ? 'destructive' : 
+            accountStatus.status === 'warning' ? 'warning' : 'info'
+          }
+          className="rounded-xl"
+        >
+          <AlertTriangle className="h-4 w-4" />
+          <div className="flex items-start justify-between w-full">
+            <div className="space-y-1">
+              <AlertTitle>
+                {accountStatus.status === 'suspended' ? 'Conta Suspensa' :
+                 accountStatus.status === 'warning' ? 'Atenção Necessária' : 'Informação Importante'}
+              </AlertTitle>
+              <AlertDescription className="space-y-2">
+                <p>{accountStatus.message}</p>
+                <p className="font-medium">{accountStatus.action}</p>
+                <Button variant="outline" size="sm" className="mt-2">
+                  Contatar Gerente
+                </Button>
+              </AlertDescription>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAlert(false)}
+              className="h-6 w-6 p-0 shrink-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        </Alert>
+      )}
       {/* Client Info */}
       <div className="flex items-center justify-between">
         <div>

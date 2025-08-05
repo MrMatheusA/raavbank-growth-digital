@@ -70,7 +70,7 @@ const DashboardCliente = ({ userType }: DashboardClienteProps) => {
               <AlertDescription className="space-y-2">
                 <p>{accountStatus.message}</p>
                 <p className="font-medium">{accountStatus.action}</p>
-                <Button variant="outline" size="sm" className="mt-2">
+                <Button variant="outline" size="sm" className="mt-2 bg-white/10 border-white/20 text-white hover:bg-white/20 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20">
                   Contatar Gerente
                 </Button>
               </AlertDescription>

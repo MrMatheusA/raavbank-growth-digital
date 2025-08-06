@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Bell, Settings, LogOut, Home, FileText, BarChart3, Menu, ArrowRightLeft } from "lucide-react";
+import { Bell, Settings, LogOut, Home, FileText, BarChart3, Menu, ArrowRightLeft, User, Building, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -15,8 +17,36 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const notifications = [
+    {
+      id: 1,
+      title: "Recebimento PIX",
+      message: "Você recebeu o valor de R$100,00 e já se encontra disponível na sua conta RaavBank.",
+      time: "2 minutos atrás",
+      type: "income",
+      icon: CreditCard
+    },
+    {
+      id: 2,
+      title: "Transferência Enviada",
+      message: "Você fez a transferência PIX no valor de R$250,00 para a chave PIX: maria@email.com",
+      time: "1 hora atrás",
+      type: "transfer",
+      icon: ArrowRightLeft
+    },
+    {
+      id: 3,
+      title: "Nova Conta Cadastrada",
+      message: "Uma nova conta empresarial foi cadastrada em seu nome - Tech Solutions LTDA.",
+      time: "3 horas atrás",
+      type: "account",
+      icon: Building
+    }
+  ];
 
   const handleLogout = () => {
     toast({
@@ -63,12 +93,57 @@ const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayou
           <div className="flex items-center gap-2">
             <ThemeToggle />
             
-            <Button variant="ghost" size="sm" className="relative">
-              <Bell className="h-4 w-4" />
-              <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 text-xs p-0 flex items-center justify-center">
-                3
-              </Badge>
-            </Button>
+            <Popover open={notificationsOpen} onOpenChange={setNotificationsOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="relative">
+                  <Bell className="h-4 w-4" />
+                  <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 text-xs p-0 flex items-center justify-center">
+                    {notifications.length}
+                  </Badge>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="end">
+                <Card className="border-0 shadow-lg">
+                  <CardContent className="p-0">
+                    <div className="p-4 border-b">
+                      <h3 className="font-semibold">Notificações</h3>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.map((notification) => {
+                        const Icon = notification.icon;
+                        return (
+                          <div key={notification.id} className="p-4 border-b last:border-b-0 hover:bg-muted/50 transition-colors">
+                            <div className="flex items-start space-x-3">
+                              <div className={`p-2 rounded-lg ${
+                                notification.type === 'income' ? 'bg-green-100 dark:bg-green-900/20' :
+                                notification.type === 'transfer' ? 'bg-blue-100 dark:bg-blue-900/20' :
+                                'bg-purple-100 dark:bg-purple-900/20'
+                              }`}>
+                                <Icon className={`h-4 w-4 ${
+                                  notification.type === 'income' ? 'text-green-600 dark:text-green-400' :
+                                  notification.type === 'transfer' ? 'text-blue-600 dark:text-blue-400' :
+                                  'text-purple-600 dark:text-purple-400'
+                                }`} />
+                              </div>
+                              <div className="flex-1 space-y-1">
+                                <p className="text-sm font-medium">{notification.title}</p>
+                                <p className="text-xs text-muted-foreground">{notification.message}</p>
+                                <p className="text-xs text-muted-foreground">{notification.time}</p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="p-4 border-t">
+                      <Button variant="outline" className="w-full" size="sm">
+                        Ver todas as notificações
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </PopoverContent>
+            </Popover>
 
             <Button variant="ghost" size="sm">
               <Settings className="h-4 w-4" />

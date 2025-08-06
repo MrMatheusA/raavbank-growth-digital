@@ -56,7 +56,42 @@ const Transferencias = () => {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Formulário de Transferência */}
-        <Card className="bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
+        <div className="space-y-6">
+          {/* Transferência Interna RaavBank */}
+          <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <Building className="h-5 w-5" />
+                Transferência RaavBank
+                <Badge variant="secondary" className="ml-2">Novo!</Badge>
+              </CardTitle>
+              <CardDescription>
+                Transfira entre contas RaavBank usando CPF/CNPJ - instantâneo e sem taxas
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-4">
+                <div className="space-y-2">
+                  <Label>CPF/CNPJ do Favorecido</Label>
+                  <Input placeholder="000.000.000-00 ou 00.000.000/0001-00" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Valor da Transferência</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-muted-foreground">R$</span>
+                    <Input type="number" step="0.01" placeholder="0,00" className="pl-10" />
+                  </div>
+                </div>
+                <Button className="w-full bg-gradient-cta hover:shadow-glow">
+                  <Building className="h-4 w-4 mr-2" />
+                  Transferir Entre Contas RaavBank
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          {/* PIX Tradicional */}
+          <Card className="bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ArrowRightLeft className="h-5 w-5 text-primary" />
@@ -131,6 +166,7 @@ const Transferencias = () => {
             </form>
           </CardContent>
         </Card>
+        </div>
 
         {/* Transferências Recentes */}
         <Card>

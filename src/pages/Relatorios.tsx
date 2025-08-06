@@ -50,10 +50,11 @@ const Relatorios = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="current-month">Mês Atual</SelectItem>
-              <SelectItem value="previous-month">Mês Anterior</SelectItem>
-              <SelectItem value="last-quarter">Último Trimestre</SelectItem>
-              <SelectItem value="last-year">Último Ano</SelectItem>
+              <SelectItem value="last-7-days">Últimos 7 dias</SelectItem>
+              <SelectItem value="last-15-days">Últimos 15 dias</SelectItem>
+              <SelectItem value="current-month">Último mês</SelectItem>
+              <SelectItem value="last-3-months">Últimos 3 meses</SelectItem>
+              <SelectItem value="last-year">Último ano</SelectItem>
             </SelectContent>
           </Select>
           <div className="flex items-center space-x-2">

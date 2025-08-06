@@ -9,11 +9,12 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
 const Transferencias = () => {
+  const [transferType, setTransferType] = useState<'pix' | 'raavbank'>('pix');
   const [transferForm, setTransferForm] = useState({
     pixKey: "",
+    cpfCnpj: "",
     amount: "",
-    description: "",
-    transferType: "pix"
+    description: ""
   });
   const [recentTransfers] = useState([
     { id: 1, recipient: "João Silva", pixKey: "joao@email.com", amount: 1500, date: "2024-01-28 14:30", status: "concluida" },
@@ -25,11 +26,13 @@ const Transferencias = () => {
 
   const handleTransfer = (e: React.FormEvent) => {
     e.preventDefault();
+    const value = parseFloat(transferForm.amount);
+    const method = transferType === 'pix' ? 'PIX' : 'Transferência RaavBank';
     toast({
-      title: "Transferência PIX realizada!",
-      description: `R$ ${parseFloat(transferForm.amount).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} enviado com sucesso.`,
+      title: `${method} realizada!`,
+      description: `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} enviado com sucesso.`,
     });
-    setTransferForm({ pixKey: "", amount: "", description: "", transferType: "pix" });
+    setTransferForm({ pixKey: "", cpfCnpj: "", amount: "", description: "" });
   };
 
   const copyPixKey = (key: string) => {
@@ -56,76 +59,70 @@ const Transferencias = () => {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Formulário de Transferência */}
-        <div className="space-y-6">
-          {/* Transferência Interna RaavBank */}
-          <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-primary">
-                <Building className="h-5 w-5" />
-                Transferência RaavBank
-                <Badge variant="secondary" className="ml-2">Novo!</Badge>
-              </CardTitle>
-              <CardDescription>
-                Transfira entre contas RaavBank usando CPF/CNPJ - instantâneo e sem taxas
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div className="space-y-2">
-                  <Label>CPF/CNPJ do Favorecido</Label>
-                  <Input placeholder="000.000.000-00 ou 00.000.000/0001-00" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Valor da Transferência</Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-3 text-muted-foreground">R$</span>
-                    <Input type="number" step="0.01" placeholder="0,00" className="pl-10" />
-                  </div>
-                </div>
-                <Button className="w-full bg-gradient-cta hover:shadow-glow">
-                  <Building className="h-4 w-4 mr-2" />
-                  Transferir Entre Contas RaavBank
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* PIX Tradicional */}
-          <Card className="bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
+        <Card className="bg-gradient-to-br from-card to-secondary/30 border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ArrowRightLeft className="h-5 w-5 text-primary" />
-              Nova Transferência PIX
+              Nova Transferência
             </CardTitle>
             <CardDescription>
-              Envie dinheiro instantaneamente para qualquer pessoa ou empresa
+              Escolha o tipo de transferência e envie dinheiro de forma segura
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleTransfer} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="transferType">Tipo de Transferência</Label>
-                <Select value={transferForm.transferType} onValueChange={(value) => setTransferForm(prev => ({ ...prev, transferType: value }))}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pix">PIX - Instantâneo</SelectItem>
-                    <SelectItem value="ted">TED - Até 1 dia útil</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            {/* Seletor de Tipo de Transferência */}
+            <div className="flex space-x-1 bg-muted p-1 rounded-lg mb-6">
+              <button
+                type="button"
+                onClick={() => setTransferType('pix')}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                  transferType === 'pix'
+                    ? 'bg-background text-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <User className="h-4 w-4" />
+                PIX
+              </button>
+              <button
+                type="button"
+                onClick={() => setTransferType('raavbank')}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                  transferType === 'raavbank'
+                    ? 'bg-background text-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Building className="h-4 w-4" />
+                RaavBank
+                <Badge variant="secondary" className="ml-1 text-xs">Novo!</Badge>
+              </button>
+            </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="pixKey">Chave PIX ou Dados Bancários</Label>
-                <Input
-                  id="pixKey"
-                  value={transferForm.pixKey}
-                  onChange={(e) => setTransferForm(prev => ({ ...prev, pixKey: e.target.value }))}
-                  placeholder="E-mail, CPF/CNPJ, telefone ou chave aleatória"
-                  required
-                />
-              </div>
+            <form onSubmit={handleTransfer} className="space-y-6">
+              {transferType === 'pix' ? (
+                <div className="space-y-2">
+                  <Label htmlFor="pixKey">Chave PIX</Label>
+                  <Input
+                    id="pixKey"
+                    value={transferForm.pixKey}
+                    onChange={(e) => setTransferForm(prev => ({ ...prev, pixKey: e.target.value }))}
+                    placeholder="E-mail, CPF/CNPJ, telefone ou chave aleatória"
+                    required
+                  />
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label htmlFor="cpfCnpj">CPF/CNPJ do Favorecido</Label>
+                  <Input
+                    id="cpfCnpj"
+                    value={transferForm.cpfCnpj}
+                    onChange={(e) => setTransferForm(prev => ({ ...prev, cpfCnpj: e.target.value }))}
+                    placeholder="000.000.000-00 ou 00.000.000/0001-00"
+                    required
+                  />
+                </div>
+              )}
 
               <div className="space-y-2">
                 <Label htmlFor="amount">Valor da Transferência</Label>
@@ -158,15 +155,17 @@ const Transferencias = () => {
               <Button 
                 type="submit" 
                 className="w-full bg-gradient-cta hover:shadow-glow hover:scale-105 transition-all duration-300"
-                disabled={!transferForm.pixKey || !transferForm.amount}
+                disabled={
+                  !transferForm.amount || 
+                  (transferType === 'pix' ? !transferForm.pixKey : !transferForm.cpfCnpj)
+                }
               >
                 <Banknote className="h-4 w-4 mr-2" />
-                Realizar Transferência
+                {transferType === 'pix' ? 'Realizar PIX' : 'Transferir via RaavBank'}
               </Button>
             </form>
           </CardContent>
         </Card>
-        </div>
 
         {/* Transferências Recentes */}
         <Card>

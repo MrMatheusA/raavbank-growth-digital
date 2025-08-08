@@ -14,7 +14,7 @@ const Dashboard = () => {
   // Tipos: 'cliente', 'gestor', 'gerente'
   // Subtipos para cliente: 'PF', 'PJ'
   const [userProfile] = useState({
-    type: 'cliente', // 'cliente' | 'gestor' | 'gerente'
+    type: 'cliente' as 'cliente' | 'gestor' | 'gerente' | 'ceo',
     subtype: 'PF', // 'PF' | 'PJ' (só para clientes)
     name: 'João Silva Santos',
     document: '123.456.789-00'
@@ -46,7 +46,11 @@ const Dashboard = () => {
   };
 
   return (
-    <DashboardLayout currentView={currentView} onViewChange={setCurrentView}>
+    <DashboardLayout 
+      currentView={currentView} 
+      onViewChange={setCurrentView}
+      userType={userProfile.type}
+    >
       {renderContent()}
     </DashboardLayout>
   );

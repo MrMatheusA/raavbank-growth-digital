@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, Settings, LogOut, Home, FileText, BarChart3, Menu, ArrowRightLeft, User, Building, CreditCard } from "lucide-react";
+import { Bell, Settings, LogOut, Home, FileText, BarChart3, Menu, ArrowRightLeft, User, Building, CreditCard, Shield, Users, Database, DollarSign, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,9 +13,10 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
   currentView: 'dashboard' | 'extratos' | 'relatorios' | 'transferencias';
   onViewChange: (view: 'dashboard' | 'extratos' | 'relatorios' | 'transferencias') => void;
+  userType: 'cliente' | 'gestor' | 'gerente' | 'ceo';
 }
 
-const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayoutProps) => {
+const DashboardLayout = ({ children, currentView, onViewChange, userType }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
@@ -56,12 +57,49 @@ const DashboardLayout = ({ children, currentView, onViewChange }: DashboardLayou
     navigate("/");
   };
 
-  const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'extratos', label: 'Extratos', icon: FileText },
-    { id: 'relatorios', label: 'Relatórios', icon: BarChart3 },
-    { id: 'transferencias', label: 'Transferências', icon: ArrowRightLeft },
-  ];
+  const getMenuItems = () => {
+    const baseItems = [
+      { id: 'dashboard', label: 'Dashboard', icon: Home },
+    ];
+
+    switch (userType) {
+      case 'cliente':
+        return [
+          ...baseItems,
+          { id: 'extratos', label: 'Extratos', icon: FileText },
+          { id: 'relatorios', label: 'Relatórios', icon: BarChart3 },
+          { id: 'transferencias', label: 'Transferências', icon: ArrowRightLeft },
+        ];
+      
+      case 'gestor':
+        return [
+          ...baseItems,
+          { id: 'extratos', label: 'Extratos', icon: FileText },
+          { id: 'relatorios', label: 'Relatórios', icon: BarChart3 },
+          { id: 'transferencias', label: 'Transferências', icon: ArrowRightLeft },
+        ];
+      
+      case 'gerente':
+        return [
+          ...baseItems,
+          { id: 'extratos', label: 'Extratos de Clientes', icon: FileText },
+          { id: 'relatorios', label: 'Relatórios Gerenciais', icon: BarChart3 },
+        ];
+      
+      case 'ceo':
+        return [
+          ...baseItems,
+          { id: 'extratos', label: 'Extratos Corporativos', icon: FileText },
+          { id: 'relatorios', label: 'Relatórios Executivos', icon: BarChart3 },
+          { id: 'transferencias', label: 'Aprovações de Alto Valor', icon: Shield },
+        ];
+      
+      default:
+        return baseItems;
+    }
+  };
+
+  const menuItems = getMenuItems();
 
   return (
     <div className="min-h-screen bg-background">
